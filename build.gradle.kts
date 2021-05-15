@@ -32,6 +32,9 @@ tasks.withType<Test> {
     }
 }
 
+// this includes all modules from OpenJFX 11 https://openjfx.io/javadoc/11/
+// if you only need a subset of all available modules, remove the ones not used
+// from this array
 val javaFXModuleNames = arrayOf("javafx.base",
                                 "javafx.controls",
                                 "javafx.fxml",
