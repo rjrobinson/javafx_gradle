@@ -20,7 +20,7 @@ repositories {
 dependencies {
     testImplementation("org.mockito", "mockito-junit-jupiter", "3.3.3")
     testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.6.2")
-    testRuntimeOnly("org.junit.jupiter","junit-jupiter-engine","5.6.2")
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.6.2")
 }
 
 
@@ -46,4 +46,17 @@ javafx {
 
 application {
     mainClassName = "com.scgrk.Main"
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.scgrk.Launcher"
+    }
+    from(Callable {
+        configurations.runtimeClasspath.map { configuration ->
+            configuration.asFileTree.fold(files().asFileTree) { collection, file ->
+                if (file.isDirectory) collection else collection.plus(zipTree(file))
+            }
+        }
+    })
 }
